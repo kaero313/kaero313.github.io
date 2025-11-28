@@ -137,9 +137,6 @@ assets:
     # only works if `assets.self_host.enabled` is 'true'
     env: # [development | production]
 
-icon:
-  path: /assets/img/avatar.jpg
-
 pwa:
   enabled: false # The option for PWA feature (installable)
   cache:
