@@ -34,8 +34,8 @@ preview_image: assets/img/amqp/prev_icon.png
 <div align="center">
   <img src="assets/img/amqp/before_workflow.png" alt="도입 이전 워크플로우" width="500">
 </div>
+> 요청이 들어오면 중간 과정 없이 그대로 서버가 받아서 처리하는 구조
 
-- 요청이 들어오면 중간 과정 없이 그대로 서버가 받아서 처리하는 구조
 - 처리해야 할 데이터가 많아지니 과부하 발생
 - 그에 따라 정상적으로 처리되지않고 유실되는 데이터 발생
 
@@ -43,6 +43,11 @@ preview_image: assets/img/amqp/prev_icon.png
 
 ## 개선 방안
 
-- AMQP 도입, 중간에서 분산 처리하는 구조로 개선
+<div align="center">
+  <img src="assets/img/amqp/after_workflow.png" alt="도입 이후 워크플로우" width="500">
+</div>
+> AMQP 도입, 중간에서 분산 처리하는 구조로 개선
+
 - 처리해야 할 데이터를 분산해줌으로써, 프로세스 안정화
 - 결론적으로, 전송된 메세지의 보장성 제공
+
