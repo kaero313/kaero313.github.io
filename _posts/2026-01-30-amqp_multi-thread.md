@@ -51,3 +51,15 @@ preview_image: assets/img/amqp/prev_icon.png
 - 처리해야 할 데이터를 분산해줌으로써, 프로세스 안정화
 - 결론적으로, 전송된 메세지의 보장성 제공
 
+## 테스트 수행
+
+- Apache JMeter을 사용하여 부하 테스트 진행
+  - 초당 5000건, 60초간 총 300,000건의 Request
+
+- AMQP 도입 전
+
+<div align="center">
+  <img src="assets/img/amqp/after_workflow.png" alt="도입 이전 테스트" width="500">
+</div>
+> 프로세스 과부하로 인하여 요청 전체를 처리하지 못 하고 Timeout이 발생한 데이터가 생김
+
