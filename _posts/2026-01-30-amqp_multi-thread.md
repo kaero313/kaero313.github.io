@@ -69,3 +69,10 @@ preview_image: assets/img/amqp/prev_icon.png
   <img src="assets/img/amqp/after_test.png" alt="도입 이후 테스트" width="500">
 </div>
 > 리스닝중인 프로세스가 과부하가 발생하지 않게 관리하여 유실된 데이터 없이 전체 처리 완료
+
+# 멀티 스레드와 스레드 풀
+---
+
+## 도입 목적
+
+MQ로 부하 분산 처리를 하였지만 허용량 이상의 요청이 들어오거나 로직 자체가 복잡하여 수행 시간이 오래 걸린다면 결론적으로 과부하가 발생하는 문제 개선
