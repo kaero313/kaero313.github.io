@@ -34,8 +34,8 @@ preview_image: assets/img/amqp/prev_icon.png
 <div align="center">
   <img src="assets/img/amqp/before_workflow.png" alt="도입 이전 워크플로우" width="500">
 </div>
+> 요청이 들어오면 중간 과정 없이 그대로 서버가 받아서 처리하는 구조
 
-- 요청이 들어오면 중간 과정 없이 그대로 서버가 받아서 처리하는 구조
 - 처리해야 할 데이터가 많아지니 과부하 발생
 - 그에 따라 정상적으로 처리되지않고 유실되는 데이터 발생
 
@@ -43,6 +43,43 @@ preview_image: assets/img/amqp/prev_icon.png
 
 ## 개선 방안
 
-- AMQP 도입, 중간에서 분산 처리하는 구조로 개선
+<div align="center">
+  <img src="assets/img/amqp/after_workflow.png" alt="도입 이후 워크플로우" width="500">
+</div>
+> AMQP 도입, 중간에서 분산 처리하는 구조로 개선
+
 - 처리해야 할 데이터를 분산해줌으로써, 프로세스 안정화
 - 결론적으로, 전송된 메세지의 보장성 제공
+
+## 테스트 수행
+
+- Apache JMeter을 사용하여 부하 테스트 진행
+  - 초당 5000건, 60초간 총 300,000건의 Request
+
+- AMQP 도입 전
+
+<div align="center">
+  <img src="assets/img/amqp/before_test.png" alt="도입 이전 테스트" width="500">
+</div>
+> 프로세스 과부하로 인하여 요청 전체를 처리하지 못 하고 Timeout이 발생한 데이터가 생김
+
+- AMQP 도입 후
+
+<div align="center">
+  <img src="assets/img/amqp/after_test.png" alt="도입 이후 테스트" width="500">
+</div>
+> 리스닝중인 프로세스가 과부하가 발생하지 않게 관리하여 유실된 데이터 없이 전체 처리 완료
+
+<br/>
+
+# 멀티 스레드와 스레드 풀
+---
+
+## 도입 목적
+
+MQ로 부하 분산 처리를 하였지만 허용량 이상의 요청이 들어오거나 로직 자체가 복잡하여 수행 시간이 오래 걸린다면 결론적으로 과부하가 발생하는 문제 개선
+
+## 기존 처리 방식
+
+- 스레드를 하나만 사용하는 싱글 스레드 방식
+- 다른 요청에 의하여 기존 스레드의 처리가 지연되면 나머지 요청의 처리도 같이 지연되는 현상 발생 
