@@ -27,3 +27,12 @@ preview_image: assets/img/embedding/prev_icon.png
 
 <br/>
 
+# 개요
+---
+
+1. 임베딩과 관련된 개념 설명
+2. RAG의 개념 + 벡터DB 저장 파이프라인
+
+<br/>
+<br/>
+
