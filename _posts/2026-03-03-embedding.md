@@ -57,3 +57,11 @@ preview_image: assets/img/embedding/prev_icon.png
 </div>
 
 <br/>
+
+### 코사인 유사도
+- 좌표(벡터) 사이의 각도를 측정하여 각이 좁을수록 유사함을 표현하는 수학적 기법
+
+<div align="center">
+  <img src="assets/img/embedding/2차원.png" alt="2차원" width="1000">
+</div>
+> 이해하기 쉽게 2차원으로 표현한 코사인 유사도
