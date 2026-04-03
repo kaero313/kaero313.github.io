@@ -51,3 +51,9 @@ preview_image: assets/img/embedding/prev_icon.png
   - 2차원: 면 (데이터 2개: 점수, 학년)
   - 3차원: 입체 (데이터 3개: 점수, 학년, 나이)
   - N차원: (데이터 N개: 점수, 학년, 나이, 지역, 성별, 로그인 시간 ...)
+
+<div align="center">
+  <img src="assets/img/embedding/차원설명.png" alt="차원설명" width="1000">
+</div>
+
+<br/>
