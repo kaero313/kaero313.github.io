@@ -74,3 +74,12 @@ preview_image: assets/img/embedding/prev_icon.png
 이처럼 코사인 유사도는 **방향**이 중요합니다.
 
 <br/>
+
+<div align="center">
+  <img src="assets/img/embedding/차원기본.png" alt="차원기본" width="1000">
+</div>
+> 다차원 임베딩을 시각화 한 자료
+
+중앙의 한 점이 기준이 되어 벡터들이 여러 방향으로 뻗어나간 걸 확인할 수 있습니다.
+
+<br/>
