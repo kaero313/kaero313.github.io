@@ -96,3 +96,15 @@ preview_image: assets/img/embedding/prev_icon.png
 <div align="center">
   <img src="assets/img/embedding/차원벡터표시.png" alt="차원벡터표시" width="1000">
 </div>
+
+그리고 이 각도를 계산하기 위해 필요한 끝점의 좌표가 바로 **벡터**입니다.
+
+이렇게 설계되어 AI 학습을 거쳐, 만들어진 것을 임베딩 모델이라고 합니다.<br/>
+아래는 표준으로 많이 쓰이는 오픈AI의 임베딩 모델 공식 문서입니다.
+- text-embedding-3-small([공식 문서](https://developers.openai.com/api/docs/models/text-embedding-3-small))
+- text-embedding-3-large([공식 문서](https://developers.openai.com/api/docs/models/text-embedding-3-large))
+
+<br/>
+<br/>
+<br/>
+
