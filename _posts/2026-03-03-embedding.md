@@ -83,3 +83,7 @@ preview_image: assets/img/embedding/prev_icon.png
 중앙의 한 점이 기준이 되어 벡터들이 여러 방향으로 뻗어나간 걸 확인할 수 있습니다.
 
 <br/>
+
+<div align="center">
+  <img src="assets/img/embedding/차원기타검색.png" alt="차원기타검색" width="1000">
+</div>
