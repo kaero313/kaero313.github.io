@@ -87,3 +87,8 @@ preview_image: assets/img/embedding/prev_icon.png
 <div align="center">
   <img src="assets/img/embedding/차원기타검색.png" alt="차원기타검색" width="1000">
 </div>
+
+여기서 기타라는 단어를 찾아봤습니다.<br/>
+찾아보니 기타 근처에 베이스, 피아노, 바이올린, 보컬 등 비슷한 단어들이 포진해있는 것을 알 수 있습니다.<br/>
+비슷한 의미를 가져, 비슷한 방향으로 뻗어나갔기 때문에 모여있는 형태가 된 것입니다.
+
