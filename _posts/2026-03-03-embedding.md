@@ -164,3 +164,13 @@ preview_image: assets/img/embedding/prev_icon.png
 
 좌측에는 요청/응답 파라미터 설명이, 우측에는 API 요청/응답 사용 예시가 나와있습니다.
 해당 API를 실제로 호출해보겠습니다.
+
+<div align="center">
+  <img src="assets/img/embedding/api테스트1.png" alt="api테스트1" width="1000">
+  <img src="assets/img/embedding/api테스트2.png" alt="api테스트2" width="1000">
+</div>
+
+API 스펙에 맞춰 서버 주소, 변환할 데이터, API Key, 임베딩 모델을 지정하여 호출하니 data:embedding 값에 벡터 데이터로 변환되어 리턴되었습니다.
+하단에 토큰값이 20이라고 써 있는것을 볼 수 있는데, 이건 모델이 '하이퍼정보 openai 임베딩 api 테스트입니다' 라는 문장을 계산한 값 입니다.
+
+<br/>
