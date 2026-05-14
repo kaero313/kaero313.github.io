@@ -130,3 +130,19 @@ preview_image: assets/img/embedding/prev_icon.png
 ### 청킹
 - 만약에 저장해야 할 문서가 1000페이지가 된다면, 전체 내용을 한 번에 저장했을 시 추후 검색에서 효율이 많이 떨어지게 됩니다.
 - 그때, 문서를 의미 있는 단위(단락, 페이지 등)로 쪼개는 작업을 청킹이라고 합니다.
+
+<div align="center">
+  <img src="assets/img/embedding/청킹.png" alt="청킹" width="1000">
+</div>
+
+다만, 문서를 일일이 확인하여 확실하게 의미있는 단위로 쪼개는 것은 힘듭니다.<br/>
+그래서 일정 부분을 겹치게 하여 조각 사이의 맥락을 연결하는 청킹 오버랩을 사용합니다.
+
+<div align="center">
+  <img src="assets/img/embedding/청킹오버랩.png" alt="청킹오버랩" width="1000">
+</div>
+
+이처럼 조각 사이의 연결 고리를 만들면, 맥락 단절의 문제를 해결할 수 있습니다. 
+
+<br/>
+
