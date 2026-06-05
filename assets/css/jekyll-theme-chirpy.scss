@@ -1,0 +1,76 @@
+---
+---
+
+/* prettier-ignore */
+@use 'main
+{%- if jekyll.environment == 'production' -%}
+  .bundle
+{%- endif -%}
+';
+
+/* append your custom style below */
+
+#sidebar .sidebar-bottom {
+  display: grid !important;
+  grid-template-columns: 1.75rem 0.25rem 1.75rem 0.25rem 1.75rem 0.25rem 1.75rem;
+  column-gap: 0.55rem;
+  justify-content: center;
+  align-items: start;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+#sidebar .sidebar-bottom #mode-toggle {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+#sidebar .sidebar-bottom .icon-border {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  align-self: start;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: calc((1.75rem - 0.25rem) / 2);
+  margin-bottom: 0;
+}
+
+#sidebar .sidebar-bottom a[aria-label='github'] {
+  grid-column: 3;
+  grid-row: 1;
+  margin-right: 0;
+}
+
+#sidebar .sidebar-bottom::before,
+#sidebar .sidebar-bottom::after {
+  content: '';
+  grid-row: 1;
+  width: 0.25rem;
+  height: 0.25rem;
+  border-radius: 50%;
+  background-color: var(--sidebar-btn-color);
+  justify-self: center;
+  align-self: start;
+  margin-top: calc((1.75rem - 0.25rem) / 2);
+  margin-bottom: 0;
+}
+
+#sidebar .sidebar-bottom::before {
+  grid-column: 4;
+}
+
+#sidebar .sidebar-bottom a[aria-label='notion'] {
+  grid-column: 5;
+  grid-row: 1;
+  margin-right: 0;
+}
+
+#sidebar .sidebar-bottom::after {
+  grid-column: 6;
+}
+
+#sidebar .sidebar-bottom a[aria-label='email'] {
+  grid-column: 7;
+  grid-row: 1;
+}
