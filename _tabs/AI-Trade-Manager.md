@@ -6,9 +6,23 @@ order: 1
 ---
 
 <div align="center">
-  <img src="assets/img/ai-trade-manager/dashboard.png" alt="대시보드" width="1500">
+  <img src="assets/img/ai-trade-manager/dashboard-current.png" alt="AI Trade Manager 대시보드" width="1500">
 </div>
-> AI 분석, 심리지수, 뉴스, 차트, 포트폴리오 등을 확인할 수 있는 대시보드 화면
 
+> AI가 돈까지 벌어주면 좋겠지만 세상은 그렇게 만만하지 않다.
 
+# 프로젝트를 시작한 이유
+---
 
+처음에는 RAG로 뉴스와 차트를 같이 읽어서 주가 전망을 해보는 정도를 생각했다. 뉴스와 현재 가격, 보유 종목을 같이 넘기면 AI가 그럴듯한 분석을 줄 수 있지 않을까 싶었다.
+
+실제로 답은 나왔다. 문제는 그 답을 실제 투자 시스템에서 믿고 운영할 수 있느냐였다. 뉴스가 오래됐거나, 임베딩이 실패했거나, 현재 포트폴리오 상태를 잘못 읽어도 AI는 꽤 자연스러운 분석을 만들었다.
+
+그래서 방향을 바꿨다. AI가 매수 버튼을 누르는 프로젝트가 아니라, AI 분석을 운영 가능한 자산 관리 흐름 안에 넣는 프로젝트로 만들기로 했다.
+
+**상세 정리**
+
+- 전체 운영 기록 허브: [AI Trade Manager](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da)
+- 운영 설계 기록: [AI Trade Manager 운영 설계 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-a704054272b583b3b1e081289e79cae2)
+
+<br/>
