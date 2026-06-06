@@ -26,3 +26,20 @@ order: 1
 - 운영 설계 기록: [AI Trade Manager 운영 설계 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-a704054272b583b3b1e081289e79cae2)
 
 <br/>
+
+# 개발 타임라인
+---
+
+- **2026.01** 거래 제어 MVP: Upbit 연동, Slack/Telegram 명령, 매수/매도 확인
+- **2026.02** 서비스 구조화: FastAPI, PostgreSQL, SQLAlchemy, Alembic
+- **2026.03** 분석 자동화: APScheduler, AI 분석 API, 백테스트, OpenSearch RAG
+- **2026.04** AI 운영 콘솔: LangGraph AI 뱅커, Reviewer Agent, SSE 활동 추적
+- **2026.05** 운영 안정화: live BUY 잠금, paper/live 분리, provider fallback, RAG warning
+
+**상세 정리**
+
+- 월별 타임라인 DB: [AI Trade Manager 타임라인](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-d894054272b5827fb26d015d3ff14fee)
+- 프로젝트 목표와 운영 기준: [프로젝트 목표와 운영 기준](https://torpid-icon-d8a.notion.site/3724054272b581caa9eeed5f55914b44)
+
+<br/>
+
