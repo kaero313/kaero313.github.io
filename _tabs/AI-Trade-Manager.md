@@ -97,3 +97,10 @@ AI 판단은 하나의 프롬프트로 끝내지 않고, 역할을 나눈 멀티
 
 <br/>
 
+# 운영과 안전장치
+---
+
+<div align="center">
+  <img src="assets/img/ai-trade-manager/safety-flow.png" alt="AI Trade Manager 운영 안전장치 플로우" width="1900">
+</div>
+
