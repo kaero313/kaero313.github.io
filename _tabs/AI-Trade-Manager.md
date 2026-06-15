@@ -104,3 +104,17 @@ AI 판단은 하나의 프롬프트로 끝내지 않고, 역할을 나눈 멀티
   <img src="assets/img/ai-trade-manager/safety-flow.png" alt="AI Trade Manager 운영 안전장치 플로우" width="1900">
 </div>
 
+AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠올리는데, 실제로는 "어떤 상황에서 절대 사지 못하게 할 것인가"가 더 중요했다.
+
+| 위험 | 대응 |
+| :--- | :--- |
+| AI가 근거 부족한 매수를 제안 | reviewer agent와 confidence threshold로 차단 |
+| 실전 매수가 의도치 않게 실행 | live BUY 기본 잠금, 명시적 설정 필요 |
+| 정책 검증 없이 실전 반영 | paper trading과 policy backtest를 먼저 사용 |
+| 과도한 비중 매수 | max buy weight, entry gate 적용 |
+| provider 장애 | Gemini primary, OpenAI fallback, warning/log 저장 |
+| RAG 데이터 부실 | stale 문서, embedding 실패, source health warning |
+
+실전 BUY는 기본적으로 비활성화했다. 설정에서 명시적으로 풀기 전까지는 매수 주문이 나가지 않는다. shadow mode에서는 AI가 어떤 주문을 냈을지 기록만 하고 실제 체결은 하지 않는다.
+
+이런 장치들은 화려한 기능은 아니지만, 운영형 AI 시스템에서는 오히려 이쪽이 더 중요하다고 생각한다. API를 붙이고 AI 답변을 받는 것보다, 실패했을 때 어디서 멈추고 무엇을 남길지 설계하는 일이 더 백엔드와 AI 서비스 운영에 가깝다.
