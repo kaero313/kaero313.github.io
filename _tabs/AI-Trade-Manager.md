@@ -125,3 +125,18 @@ AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠
 
 <br/>
 
+# 문제와 트러블슈팅
+---
+
+운영 기준을 잡고 나니 문제는 기능 구현보다 경계 관리에 가까웠다.
+
+AI가 답을 만들고, 스케줄러가 돌고, 주문 API가 붙는 순간부터 중요한 건 "잘 동작한다"보다 "잘못 동작할 때 어디서 멈추고 무엇을 남길 것인가"였다.
+
+## 1. AI 답변 신뢰성
+
+| 항목 | 내용 |
+| :--- | :--- |
+| 운영 리스크 | 오래된 뉴스, 누락된 embedding, provider fallback 상황에서도 AI가 자연스러운 답변을 생성 |
+| 조치 | ingestion 상태, source health, stale warning, missing embedding warning, provider warning 분리 |
+| 남긴 기준 | AI 답변보다 데이터 품질과 provider 상태를 먼저 노출 |
+
