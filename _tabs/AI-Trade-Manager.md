@@ -181,3 +181,14 @@ AI 판단은 주문 직전에 즉흥적으로 호출하는 구조가 아니다. 
 
 AI 판단에는 포트폴리오, 기술 지표, RAG 뉴스, 시장 심리, 과거 실패 피드백을 넣었다. 출력은 주문 명령이 아니라 `decision`, `confidence`, `recommended_weight`, `reasoning`으로 구성된 판단 로그로 제한했다.
 
+- 최종 프롬프트 요약
+
+| 구분 | 내용 |
+| :--- | :--- |
+| System 영역 | 역할, JSON 스키마, 안전 규칙, 실패 피드백 |
+| User 영역 | Symbol, Portfolio, Technical, News, Sentiment |
+| Output | `BUY / SELL / HOLD`, `confidence`, `recommended_weight`, `reasoning` |
+| Execution | AI 응답은 주문 요청이 아니라 분석 로그이며, executor가 confidence, entry gate, shadow mode, live BUY lock을 다시 검사 |
+
+입력 컨텍스트는 보통 2,500~4,500 tokens 정도로 잡았다. 페르소나나 실패 피드백이 길어지면 5,000 tokens 이상으로 늘 수 있어서, 캔들 원문 전체가 아니라 계산된 지표와 요약된 근거를 넘기는 쪽으로 설계했다.
+
