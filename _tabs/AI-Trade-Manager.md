@@ -227,3 +227,9 @@ AI 뱅커는 일반 챗봇처럼 바로 종목을 추천하지 않는다. 현재
 
 LangGraph 기반으로 supervisor, RAG, quantitative, reviewer 역할을 나누고, 각 단계가 어떤 일을 했는지 SSE 활동 카드로 흘려보내도록 했다.
 
+## 포트폴리오
+
+<div align="center">
+  <img src="assets/img/ai-trade-manager/portfolio-page.png" alt="포트폴리오 분석 화면" width="1500">
+</div>
+
