@@ -35,6 +35,7 @@ order: 1
 - **2026.03** 분석 자동화: APScheduler, AI 분석 API, 백테스트, OpenSearch RAG
 - **2026.04** AI 운영 콘솔: LangGraph AI 뱅커, Reviewer Agent, SSE 활동 추적
 - **2026.05** 운영 안정화: live BUY 잠금, paper/live 분리, provider fallback, RAG warning
+- **2026.06** 운영 검증 체계화: 트러블슈팅, AI 판단 계약, 화면 증거, RAG/DB/Test 근거 정리
 
 **상세 정리**
 
