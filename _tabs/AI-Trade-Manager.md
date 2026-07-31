@@ -20,37 +20,6 @@ order: 1
 
 그래서 방향을 바꿨다. AI가 매수 버튼을 누르는 프로젝트가 아니라, AI 분석을 운영 가능한 자산 관리 흐름 안에 넣는 프로젝트로 만들기로 했다.
 
-**상세 정리**
-
-- 전체 운영 기록 허브: [AI Trade Manager](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da)
-- 운영 설계 기록: [AI Trade Manager 운영 설계 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-a704054272b583b3b1e081289e79cae2)
-
-<br/>
-
-# 개발 타임라인
----
-
-- **2026.01** 거래 제어 MVP: Upbit 연동, Slack/Telegram 명령, 매수/매도 확인
-- **2026.02** 서비스 구조화: FastAPI, PostgreSQL, SQLAlchemy, Alembic
-- **2026.03** 분석 자동화: APScheduler, AI 분석 API, 백테스트, OpenSearch RAG
-- **2026.04** AI 운영 콘솔: LangGraph AI 뱅커, Reviewer Agent, SSE 활동 추적
-- **2026.05** 운영 안정화: live BUY 잠금, paper/live 분리, provider fallback, RAG warning
-- **2026.06** 운영 검증 체계화: 트러블슈팅, AI 판단 계약, 화면 증거, RAG/DB/Test 근거 정리
-
-**상세 정리**
-
-- 월별 타임라인 DB: [AI Trade Manager 타임라인](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-d894054272b5827fb26d015d3ff14fee)
-- 프로젝트 목표와 운영 기준: [프로젝트 목표와 운영 기준](https://torpid-icon-d8a.notion.site/3724054272b581caa9eeed5f55914b44)
-
-<br/>
-
-# 최종 목표
----
-
-AI Trade Manager의 목표는 종목을 추천하는 AI를 만드는 것이 아니었다.
-
-AI 판단, 시장 데이터, 포트폴리오, 주문 실행, 운영 경고를 하나의 흐름으로 묶고, 실제 운영 중 문제가 생겼을 때 숨기지 않는 트레이딩 운영 콘솔을 만드는 것이 목표였다.
-
 > 목표로 잡은 운영 기준
 
 - 판단 근거와 사용된 데이터를 추적할 수 있어야 한다
@@ -58,7 +27,22 @@ AI 판단, 시장 데이터, 포트폴리오, 주문 실행, 운영 경고를 �
 - paper/live 매매는 분리되고, 실전 BUY는 기본적으로 잠겨 있어야 한다
 - 주문, 포지션, 포트폴리오 스냅샷은 나중에 다시 확인할 수 있어야 한다
 
-결국 핵심은 AI가 무엇을 추천했는지가 아니라, 그 판단을 운영 환경에서 믿고 추적할 수 있는 구조를 만드는 것이었다. 이 기준을 만족시키기 위해 다음 아키텍처로 묶었다.
+> 전체 운영 기록은 [AI Trade Manager 허브](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da)와 [운영 설계 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-a704054272b583b3b1e081289e79cae2)에 있다.
+
+<br/>
+
+# 개발 타임라인
+---
+
+- 2026.01 — 거래 제어 MVP: Upbit 연동, Slack/Telegram 명령, 매수/매도 확인
+- 2026.02 — 서비스 구조화: FastAPI, PostgreSQL, SQLAlchemy, Alembic
+- 2026.03 — 분석 자동화: APScheduler, AI 분석 API, 백테스트, OpenSearch RAG
+- 2026.04 — AI 운영 콘솔: LangGraph AI 뱅커, Reviewer Agent, SSE 활동 추적
+- 2026.05 — 운영 안정화: live BUY 잠금, paper/live 분리, provider fallback, RAG warning
+- 2026.06 — 운영 검증 체계화: 트러블슈팅, AI 판단 계약, 화면 증거, RAG/DB/Test 근거 정리
+- 2026.07 — 실주문 경계 재설계: 안전성 리뷰 P0 4건, 주문 멱등성, 전역 kill switch, fail-closed 거래 모드, UI 전면 개편
+
+> 월별 상세는 [타임라인 DB](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-d894054272b5827fb26d015d3ff14fee)에, 프로젝트 방향은 [목표와 운영 기준](https://torpid-icon-d8a.notion.site/3724054272b581caa9eeed5f55914b44)에 있다.
 
 <br/>
 
@@ -76,25 +60,13 @@ AI 판단, 시장 데이터, 포트폴리오, 주문 실행, 운영 경고를 �
 | Frontend | React/Vite, TanStack Query, Recharts | 대시보드, 포트폴리오, AI 뱅커, 백테스트 화면 |
 | Backend | FastAPI, async SQLAlchemy, APScheduler | API, 스케줄러, 주문/분석 흐름 제어 |
 | Data | PostgreSQL, OpenSearch | 포지션/주문/스냅샷 저장, 뉴스 RAG 검색 |
+| Safety | 주문 의도 원장, Kill Switch Gate, 거래 모드 원장 | 실주문 멱등성, 신규 주문 차단, 모드 판정을 DB에서 결정 |
 | External | Upbit, Slack, RSS/News | 거래소 연동, 운영 제어, 시장 컨텍스트 수집 |
 | AI/Ops | Gemini, OpenAI fallback, Logs/Warning | 분석 생성, provider 장애 대응, 운영 상태 노출 |
 
-AI 판단은 하나의 프롬프트로 끝내지 않고, 역할을 나눈 멀티 에이전트로 처리했다.
+Safety는 7월에 생긴 층이다. 주문을 낼지 말지를 애플리케이션 코드 여기저기서 판단하던 것을, 거래소로 나가는 모든 POST가 하나의 주문 서비스와 그 앞의 게이트를 지나도록 바꿨다. 프로세스가 재시작돼도 상태가 남아야 해서 메모리가 아니라 PostgreSQL에 뒀다.
 
-| 역할 | 책임 |
-| :--- | :--- |
-| Supervisor | 요청 분류와 작업 흐름 제어 |
-| RAG Worker | 뉴스, 시장 문맥, RAG 검색 |
-| Quant Worker | 가격, 지표, 포트폴리오 상태 분석 |
-| Reviewer | 근거 부족, 과도한 확신, 주문 위험 검토 |
-
-프론트는 단순 화면이 아니라 운영 콘솔 역할을 하도록 만들었다. AI 뱅커는 SSE로 에이전트 진행 상태를 보여주고, 대시보드는 시장 상태와 RAG/provider warning을 같이 보여준다.
-
-백엔드는 FastAPI를 중심으로 주문, 분석, 스케줄러, 포트폴리오 스냅샷을 관리한다. PostgreSQL에는 추적 가능한 운영 데이터를 남기고, OpenSearch에는 뉴스 RAG 검색을 위한 chunk 문서와 parent 문서를 저장했다.
-
-**상세 정리**
-
-- 아키텍처 다이어그램과 기술 선택 이유: [전체 아키텍처와 기술 선택](https://torpid-icon-d8a.notion.site/3724054272b581ee9cede0fe3899dc68)
+> 기술 선택 이유는 [전체 아키텍처와 기술 선택](https://torpid-icon-d8a.notion.site/3724054272b581ee9cede0fe3899dc68)에 정리했다.
 
 <br/>
 
@@ -107,95 +79,52 @@ AI 판단은 하나의 프롬프트로 끝내지 않고, 역할을 나눈 멀티
 
 AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠올리는데, 실제로는 "어떤 상황에서 절대 사지 못하게 할 것인가"가 더 중요했다.
 
+판단 층에서는 reviewer와 entry gate가 근거 없는 매수를 거른다. BUY 직전 2차 검증은 비중을 줄일 수만 있고, 실행에는 저장된 분석 ID만 전달되며, provider가 늦으면 그 판단은 HOLD로 남는다.
+
+주문 실행 층은 7월에 다시 만들었다.
+
 | 위험 | 대응 |
 | :--- | :--- |
-| AI가 근거 부족한 매수를 제안 | reviewer agent와 confidence threshold로 차단 |
-| 실전 매수가 의도치 않게 실행 | live BUY 기본 잠금, 명시적 설정 필요 |
+| 타임아웃 재시도로 같은 주문이 두 번 체결 | 주문 의도를 DB에 먼저 저장하고 identifier 확정, 재전송 대신 조회로 복구 |
+| 정지시켰는데 다음 스케줄에 주문이 나감 | 모든 거래소 POST 앞에 `ARMED` / `EXIT_ONLY` / `BLOCK_ALL` 게이트 |
+| 설정 누락·오타가 live로 해석 | 기본값 `paper + inactive + BLOCK_ALL`, 판정 실패는 live로 보정하지 않음 |
+| 전량청산 실패를 성공으로 표시 | 미체결 0, 잔고 0, 원장 일치를 확인한 `COMPLETED + VERIFIED`만 성공 |
 | 정책 검증 없이 실전 반영 | paper trading과 policy backtest를 먼저 사용 |
-| 과도한 비중 매수 | max buy weight, entry gate 적용 |
-| provider 장애 | Gemini primary, OpenAI fallback, warning/log 저장 |
-| RAG 데이터 부실 | stale 문서, embedding 실패, source health warning |
 
-실전 BUY는 기본적으로 비활성화했다. 설정에서 명시적으로 풀기 전까지는 매수 주문이 나가지 않는다. shadow mode에서는 AI가 어떤 주문을 냈을지 기록만 하고 실제 체결은 하지 않는다.
+실전 BUY는 기본적으로 비활성화했고, 잠금은 하나가 아니다. live 모드 전환, 봇 시작, 주문 게이트 `ARMED` 전환이 각각 별개의 관리자 작업이며 어느 것도 다음 단계를 자동으로 실행하지 않는다.
 
-이런 장치들은 화려한 기능은 아니지만, 운영형 AI 시스템에서는 오히려 이쪽이 더 중요하다고 생각한다. API를 붙이고 AI 답변을 받는 것보다, 실패했을 때 어디서 멈추고 무엇을 남길지 설계하는 일이 더 백엔드와 AI 서비스 운영에 가깝다.
+막지 말아야 할 것도 같이 정했다. 게이트가 닫혀 있어도 분석과 reconciliation은 돌고, 리스크 점검 실패로 막는 것은 신규 매수뿐이다. 매도와 비상청산까지 잠그면 자산을 빼지 못한다.
 
-**상세 정리**
-
-- 운영 기준과 장애 대응 근거: [자동매매 안전장치와 장애 대응](https://torpid-icon-d8a.notion.site/3724054272b5818fac75e1fa743f654b)
+> 운영 기준과 장애 대응 근거는 [자동매매 안전장치와 장애 대응](https://torpid-icon-d8a.notion.site/3724054272b5818fac75e1fa743f654b)에 있다.
 
 <br/>
 
 # 문제와 트러블슈팅
 ---
 
-운영 기준을 잡고 나니 문제는 기능 구현보다 경계 관리에 가까웠다.
+운영하면서 잡은 케이스들이다. 초반 세 건은 노션에 정리해뒀다.
 
-AI가 답을 만들고, 스케줄러가 돌고, 주문 API가 붙는 순간부터 중요한 건 "잘 동작한다"보다 "잘못 동작할 때 어디서 멈추고 무엇을 남길 것인가"였다.
+- AI 답변 신뢰성 — 데이터 품질 경고를 AI 답변보다 먼저 노출하게 했다
+- 실전 주문 경계 — 검증 안 된 판단은 실제 주문 없이 paper/shadow 기록으로만 남긴다
+- 비동기 작업 관측성 — 최종 응답만이 아니라 중간 상태와 실패 지점까지 화면과 로그에 남긴다
 
-## 1. AI 답변 신뢰성
+## 실주문 경계 재점검 (2026.07)
 
-| 항목 | 내용 |
-| :--- | :--- |
-| 운영 리스크 | 오래된 뉴스, 누락된 embedding, provider fallback 상황에서도 AI가 자연스러운 답변을 생성 |
-| 조치 | ingestion 상태, source health, stale warning, missing embedding warning, provider warning 분리 |
-| 남긴 기준 | AI 답변보다 데이터 품질과 provider 상태를 먼저 노출 |
+7월에는 판단 경계 아래, 주문이 실제로 거래소에 나가는 구간을 처음부터 다시 읽었다. 결과가 좋지 않았다.
 
-## 2. 실전 주문 경계
+브로커 호출은 타임아웃이 나면 최대 5회까지 재시도하는데, 정작 주문에 고유 식별자를 붙이지 않고 있었다. 거래소가 주문을 접수하고 응답만 유실되면 같은 시장가 주문이 한 번 더 나갈 수 있는 구조였다. 비상 정지는 봇 설정의 플래그만 내렸고, 하드 TP/SL 경로는 그 플래그를 확인하기 전에 실행되고 있었다. 거래 모드 기본값은 `live`였고 정확히 `paper`가 아닌 값은 전부 live로 해석했다. 전량청산은 종목별 주문 예외를 로그로만 남기고 성공 응답을 돌려주고 있었다.
 
-| 항목 | 내용 |
-| :--- | :--- |
-| 운영 리스크 | 검증되지 않은 AI 판단이 실제 매수로 이어질 수 있음 |
-| 조치 | paper/live 분리, live BUY lock, entry gate, TP/SL, max buy weight 적용 |
-| 남긴 기준 | 실전 BUY는 기본 잠금, 검증되지 않은 판단은 paper/shadow에서만 기록 |
+> 실제로 사고가 난 적은 없다. 다만 사고가 안 난 이유를 설계로 설명할 수 없었다.
 
-## 3. 비동기 작업 관측성
+네 건 모두 P0로 분류하고, 고치기 전까지 live 자동매매를 멈췄다. 그 결과물이 위 안전장치의 주문 실행 층이고, 고치는 동안 backend 테스트는 123개에서 632개가 됐다. 특히 걸린 건 세 번째였다. 운영 문서에는 모의 거래로 시작한다고 적어놨는데 코드 기본값은 live였다.
 
-| 항목 | 내용 |
-| :--- | :--- |
-| 운영 리스크 | 스케줄러, RAG ingestion, AI provider 호출, reviewer 판단이 서로 다른 시점에 실행되어 실패 원인 추적이 어려움 |
-| 조치 | analysis log, chat session, portfolio snapshot, provider warning, SSE activity UI 추가 |
-| 남긴 기준 | 최종 응답뿐 아니라 중간 상태와 실패 지점까지 화면과 로그에 남김 |
+## 상태를 사실대로 보여주기 (2026.07)
 
-**상세 정리**
+같은 리뷰에서 프론트 문제도 나왔다. 포트폴리오 조회가 실패하면 화면에 0원이 찍혔다. 자산이 없는 것과 조회에 실패한 것이 구분되지 않았고, 그 0원은 AI 브리핑 컨텍스트로도 넘어갔다. AI는 "보유 자산이 없으니 신규 진입을 고려해볼 만하다" 같은 말을 자연스럽게 만들어낸다.
 
-- 운영 트러블슈팅 케이스 상세 정리: [운영 트러블슈팅 케이스](https://torpid-icon-d8a.notion.site/3734054272b5810d8903c9283ce1e6c1)
-- RAG ingestion, embedding, provider fallback 기준: [RAG와 AI Provider 운영](https://torpid-icon-d8a.notion.site/RAG-AI-Provider-3724054272b581aaa4d1db140cf36035)
-- DB migration과 테스트 검증 근거: [DB Migration과 테스트 근거](https://torpid-icon-d8a.notion.site/DB-Migration-3724054272b581178dd3f280a7263f59)
+`live / snapshot / cached / error / empty / loading` 상태 판정을 순수 함수로 분리하고 전 화면이 같은 함수를 쓰게 했다. 캐시가 있는 오류는 값과 stale 경고를 같이 보여주고, 캐시가 없는 오류는 수치를 숨기고, 상태가 불확실하면 AI 전송을 막는다. 이 작업을 하면서 화면 전체를 공통 AppShell과 다크/라이트 semantic token으로 개편했다. `LIVE`나 `PARTIAL`은 색만으로 전달하지 않고 항상 텍스트를 붙였다.
 
-<br/>
-
-# 운영 루틴과 AI 판단 계약
----
-
-AI 판단은 주문 직전에 즉흥적으로 호출하는 구조가 아니다. 하루 동안 데이터 수집, 분석, 검증, 기록이 일정한 주기로 돌고, 주문 실행은 이미 저장된 AI 판단 로그와 안전장치를 다시 검사하는 단계로 분리했다.
-
-- 운영 루틴
-
-| 구분 | 운영 기준 |
-| :--- | :--- |
-| 뉴스/RAG 수집 | 설정값 기반 주기 실행, 코드 기본값은 4시간 |
-| 시장 상태 | 5분마다 시장 심리지수 갱신 |
-| AI 판단 | 60분마다 관심 종목별 `BUY / SELL / HOLD` 분석 |
-| 검증/기록 | 30분마다 과거 판단 정확도 검증, 1시간마다 포트폴리오 스냅샷 저장 |
-| 브리핑 | 매일 08:30 포트폴리오와 시장 상태 기반 AI 브리핑 |
-
-AI 판단에는 포트폴리오, 기술 지표, RAG 뉴스, 시장 심리, 과거 실패 피드백을 넣었다. 출력은 주문 명령이 아니라 `decision`, `confidence`, `recommended_weight`, `reasoning`으로 구성된 판단 로그로 제한했다.
-
-- 최종 프롬프트 요약
-
-| 구분 | 내용 |
-| :--- | :--- |
-| System 영역 | 역할, JSON 스키마, 안전 규칙, 실패 피드백 |
-| User 영역 | Symbol, Portfolio, Technical, News, Sentiment |
-| Output | `BUY / SELL / HOLD`, `confidence`, `recommended_weight`, `reasoning` |
-| Execution | AI 응답은 주문 요청이 아니라 분석 로그이며, executor가 confidence, entry gate, shadow mode, live BUY lock을 다시 검사 |
-
-입력 컨텍스트는 보통 2,500~4,500 tokens 정도로 잡았다. 페르소나나 실패 피드백이 길어지면 5,000 tokens 이상으로 늘 수 있어서, 캔들 원문 전체가 아니라 계산된 지표와 요약된 근거를 넘기는 쪽으로 설계했다.
-
-**상세 정리**
-
-- AI 판단 루틴과 프롬프트 계약: [AI 판단 루틴과 프롬프트 계약](https://torpid-icon-d8a.notion.site/AI-3754054272b581829337e86149b4b2e0)
+> 케이스별 상세는 [운영 트러블슈팅](https://torpid-icon-d8a.notion.site/3734054272b5810d8903c9283ce1e6c1), [RAG와 AI Provider 운영](https://torpid-icon-d8a.notion.site/RAG-AI-Provider-3724054272b581aaa4d1db140cf36035), [DB Migration과 테스트 근거](https://torpid-icon-d8a.notion.site/DB-Migration-3724054272b581178dd3f280a7263f59)에 나눠 정리했다.
 
 <br/>
 
@@ -212,9 +141,7 @@ AI 판단에는 포트폴리오, 기술 지표, RAG 뉴스, 시장 심리, 과�
 
 > 시세보다 지금 시스템이 믿을 수 있는 상태인지 먼저 보여주는 화면이다.
 
-대시보드는 현재 상태를 빠르게 보는 화면이다. 시장 심리, 관심 종목, 차트, AI 분석 요약, 포트폴리오 상태, provider warning을 한 화면에 모았다.
-
-AI가 HOLD라고 했는지보다, 왜 HOLD인지와 현재 데이터가 정상인지가 더 중요하다고 봤다.
+시장 심리, 차트, AI 분석 요약, 포트폴리오 상태, provider warning을 한 화면에 모았다. 상단 바에는 거래 모드, runtime, 주문 게이트 상태가 어느 화면에서든 고정으로 떠 있다.
 
 ## AI 뱅커
 
@@ -224,9 +151,7 @@ AI가 HOLD라고 했는지보다, 왜 HOLD인지와 현재 데이터가 정상�
 
 > AI의 최종 답변보다 답변이 만들어진 과정을 추적하게 만드는 것이 핵심이었다.
 
-AI 뱅커는 일반 챗봇처럼 바로 종목을 추천하지 않는다. 현재 보유 자산, 시장 뉴스, 기술 지표, 리스크 상태를 확인하고 reviewer를 통해 과도한 확신이나 근거 부족을 한번 더 걸러낸다.
-
-LangGraph 기반으로 supervisor, RAG, quantitative, reviewer 역할을 나누고, 각 단계가 어떤 일을 했는지 SSE 활동 카드로 흘려보내도록 했다.
+일반 챗봇처럼 바로 종목을 추천하지 않는다. LangGraph 기반으로 supervisor, RAG, quant, reviewer 역할을 나누고, 각 단계가 어떤 일을 했는지 SSE 활동 카드로 흘려보낸다. reviewer가 과도한 확신과 근거 부족을 한번 더 걸러낸다.
 
 ## 포트폴리오
 
@@ -236,9 +161,7 @@ LangGraph 기반으로 supervisor, RAG, quantitative, reviewer 역할을 나누�
 
 > 잔고 조회가 아니라 손익과 리스크를 시간 흐름으로 추적하는 화면이다.
 
-Upbit 체결 내역과 현재 잔고를 그대로 읽으면 생각보다 예외가 많았다. 그래서 주문 이력과 현재 포지션을 분리해서 저장하고, portfolio snapshot을 따로 남겼다.
-
-화면에서는 총 자산, 보유 종목, 기간별 손익, AI 브리핑을 같이 보여준다. 나중에 "언제부터 성과가 흔들렸는지"를 보려면 스냅샷 데이터가 필요하다고 봤다.
+Upbit 체결 내역과 잔고를 그대로 읽으면 예외가 많아서, 주문 이력과 포지션을 분리 저장하고 portfolio snapshot을 따로 남겼다. "언제부터 성과가 흔들렸는지"를 보려면 시점별 데이터가 필요하니까.
 
 ## 정책 연구소와 백테스트
 
@@ -248,21 +171,27 @@ Upbit 체결 내역과 현재 잔고를 그대로 읽으면 생각보다 예외�
 
 > 그럴듯한 정책을 실전에 붙이기 전에 먼저 깨뜨려 보는 화면이다.
 
-정책 연구소에서는 종목, 기간, 리스크 성향, 전략 preset을 정하고 백테스트를 돌려볼 수 있다. 여기서 기대한 것은 수익률 숫자 하나가 아니라, 정책이 어떤 조건에서 잘못되는지를 찾는 것이었다.
+종목, 기간, 리스크 성향, 전략 preset으로 백테스트를 돌린다. 기대한 건 수익률 숫자가 아니라 정책이 어떤 조건에서 잘못되는지 찾는 것이다. 결과는 EMA/RSI 규칙 정책의 검증이지 운영 LLM 전략의 재현이 아니라서, 화면에도 그대로 명시했다.
 
-**상세 정리**
+## 설정
 
-- 화면별 기능과 검증 포인트: [주요 기능과 화면](https://torpid-icon-d8a.notion.site/3724054272b58198880bee2d53c46587)
+<div align="center">
+  <img src="assets/img/ai-trade-manager/settings-page.png" alt="설정 화면" width="1500">
+</div>
+
+> 적용되지 않는 설정을 적용된 것처럼 보여주지 않는 화면이다.
+
+PostgreSQL SystemConfig가 실제로 소비하는 키만 보여준다. 저장은 키별 서버 검증과 version 기반 CAS를 거치고, 충돌은 `409`로 거절된다. API key는 환경변수로만 읽고 화면에 노출하지 않는다.
+
+> 화면별 검증 포인트는 [주요 기능과 화면](https://torpid-icon-d8a.notion.site/3724054272b58198880bee2d53c46587)에 정리했다.
 
 <br/>
 
 # 마무리
 ---
 
-AI Trade Manager를 만들면서 느낀 건, AI 서비스에서 모델은 생각보다 일부라는 점이다.
+AI Trade Manager를 만들면서 느낀 건, AI 서비스에서 모델은 생각보다 일부라는 점이다. 실제로 운영하려면 데이터가 언제 들어왔는지, 실패하면 어디서 멈추는지, 실전 기능은 어떤 조건에서 잠겨야 하는지가 더 중요했다.
 
-모델을 잘 고르는 것도 중요하지만, 실제로 운영하려면 데이터가 언제 들어왔는지, 실패하면 어디서 멈추는지, 사용자가 어떤 근거를 보고 판단할 수 있는지, 실전 기능은 어떤 조건에서 잠겨야 하는지가 더 중요했다.
+처음에는 RAG로 주가 전망을 해보고 싶어서 시작했다. 지금은 AI 분석, RAG 뉴스, 포트폴리오, 백테스트, 자동매매, Slack 제어를 하나의 운영 흐름으로 묶은 개인용 자산 관리 도구가 됐다. 7월 작업은 대부분 새 기능이 아니라, 이미 돌아가던 코드를 사고가 안 난 이유를 설명할 수 있는 상태로 바꾸는 일이었다. 재미있지는 않았지만 이번 달이 제일 남는 게 많았다.
 
-처음에는 RAG로 주가 전망을 해보고 싶어서 시작했다. 지금은 AI 분석, RAG 뉴스, 포트폴리오, 백테스트, 자동매매, Slack 제어를 하나의 운영 흐름으로 묶은 개인용 자산 관리 도구가 됐다.
-
-아직 완성이라고 보기는 어렵다. 앞으로는 장기 성과 리포트, 더 정교한 리스크 엔진, 배포 환경의 관측성, 전략별 성과 비교를 더 보강할 생각이다. 다만 이 프로젝트를 통해 백엔드, AI, 데이터, 운영 설계를 한 화면에서 연결하는 경험은 꽤 많이 쌓았다고 생각한다.
+아직 완성은 아니다. 원격 CI와 배포 경로 E2E, 파이썬 산술의 Decimal 전환, 단일 프로세스 스케줄러가 남아 있다. 다만 백엔드, AI, 데이터, 운영 설계를 하나의 흐름으로 연결하는 경험은 여기서 쌓았다.
