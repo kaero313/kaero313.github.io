@@ -34,7 +34,7 @@ order: 1
 # 개발 타임라인
 ---
 
-- 2026.01 — 거래 제어 MVP: Upbit 연동, Slack/Telegram 명령, 매수/매도 확인
+- 2026.01 — 거래 제어 MVP: Upbit 연동, Slack 명령, 매수/매도 확인
 - 2026.02 — 서비스 구조화: FastAPI, PostgreSQL, SQLAlchemy, Alembic
 - 2026.03 — 분석 자동화: APScheduler, AI 분석 API, 백테스트, OpenSearch RAG
 - 2026.04 — AI 운영 콘솔: LangGraph AI 뱅커, Reviewer Agent, SSE 활동 추적
@@ -89,13 +89,12 @@ AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠
 | 정지시켰는데 다음 스케줄에 주문이 나감 | 모든 거래소 POST 앞에 `ARMED` / `EXIT_ONLY` / `BLOCK_ALL` 게이트 |
 | 설정 누락·오타가 live로 해석 | 기본값 `paper + inactive + BLOCK_ALL`, 판정 실패는 live로 보정하지 않음 |
 | 전량청산 실패를 성공으로 표시 | 미체결 0, 잔고 0, 원장 일치를 확인한 `COMPLETED + VERIFIED`만 성공 |
-| 정책 검증 없이 실전 반영 | paper trading과 policy backtest를 먼저 사용 |
 
 실전 BUY는 기본적으로 비활성화했고, 잠금은 하나가 아니다. live 모드 전환, 봇 시작, 주문 게이트 `ARMED` 전환이 각각 별개의 관리자 작업이며 어느 것도 다음 단계를 자동으로 실행하지 않는다.
 
 막지 말아야 할 것도 같이 정했다. 게이트가 닫혀 있어도 분석과 reconciliation은 돌고, 리스크 점검 실패로 막는 것은 신규 매수뿐이다. 매도와 비상청산까지 잠그면 자산을 빼지 못한다.
 
-> 운영 기준과 장애 대응 근거는 [자동매매 안전장치와 장애 대응](https://torpid-icon-d8a.notion.site/3724054272b5818fac75e1fa743f654b)에 있다.
+> 판단 계약과 주문 차단 조건은 [AI 판단 루틴과 프롬프트 계약](https://torpid-icon-d8a.notion.site/3754054272b581829337e86149b4b2e0), 장애 대응 근거는 [자동매매 안전장치와 장애 대응](https://torpid-icon-d8a.notion.site/3724054272b5818fac75e1fa743f654b)에 있다.
 
 <br/>
 
