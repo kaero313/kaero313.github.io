@@ -1,8 +1,9 @@
 ---
 # the default layout is 'page'
 title: Barrier-Free MCP
-icon: fas fa-wheelchair
+icon: fas fa-train-subway
 order: 2
+image: /assets/img/og/barrier-free-mcp.jpg
 mermaid: true
 ---
 

@@ -3,6 +3,7 @@
 title: AI Trade Manager
 icon: fas fa-chart-line
 order: 1
+image: /assets/img/og/ai-trade-manager.jpg
 ---
 
 <div align="center">
