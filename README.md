@@ -8,6 +8,10 @@
   AI 분석, RAG 뉴스, 포트폴리오, 백테스트, 자동매매 안전장치를 묶은 개인용 트레이딩 운영 시스템
   - [Notion 운영 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da)
 
+- [Barrier-Free MCP](https://kaero313.github.io/Barrier-Free-MCP/)  
+  서울 지하철 교통약자 이동 정보를 공공 API 다섯 종류에서 모아 확인된 근거 안에서만 답하는 MCP 서버
+  - [Notion 기록 허브](https://torpid-icon-d8a.notion.site/Barrier-Free-Mobility-MCP-39f4054272b58145b90ed07cd4f38ce0)
+
 ## AI / LLM
 
 - [[MCP] AI Agent에게 손과 발을 달아주는 법](https://kaero313.github.io/posts/mcp_1/)
