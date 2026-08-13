@@ -4,7 +4,11 @@ layout: default
 
 {% include lang.html %}
 
-{% assign all_pinned = site.posts | where: 'pin', 'true' %}
+{% comment %}
+  고정 글 순서는 front matter 의 pin_order 로 정한다 (작을수록 위).
+  없으면 날짜 역순.
+{% endcomment %}
+{% assign all_pinned = site.posts | where: 'pin', 'true' | sort: 'pin_order' %}
 {% assign all_normal = site.posts | where_exp: 'item', 'item.pin != true and item.hidden != true' %}
 
 {% assign posts = '' | split: '' %}
@@ -47,7 +51,7 @@ layout: default
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
     <article class="card-wrapper card">
-      <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row">
+      <a href="{{ post.tab_url | default: post.url | relative_url }}" class="post-preview row g-0 flex-md-row">
         {% assign card_body_col = '12' %}
 
         {% if post.preview_image %}
@@ -88,7 +92,7 @@ layout: default
               {% if post.pin %}
                 <div class="pin ms-1">
                   <i class="fas fa-thumbtack fa-fw"></i>
-                  <span>{{ site.data.locales[lang].post.pin_prompt }}</span>
+                  <span>{{ site.data.locales[lang].post.pin_prompt | default: '고정' }}</span>
                 </div>
               {% endif %}
             </div>
