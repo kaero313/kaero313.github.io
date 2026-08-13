@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'en' }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex">
+    <title>{{ page.title }}</title>
+    <link rel="canonical" href="{{ page.tab_url | absolute_url }}">
+    <meta http-equiv="refresh" content="0; url={{ page.tab_url | relative_url }}">
+    <script>
+      location.replace('{{ page.tab_url | relative_url }}');
+    </script>
+  </head>
+  <body>
+    <a href="{{ page.tab_url | relative_url }}">{{ page.title }}</a>
+  </body>
+</html>
