@@ -1,0 +1,18 @@
+# 기술 노트 페이지의 표시 순서
+#
+#   name : 상위 카테고리. 여기 없는 카테고리는 뒤에 알파벳순으로 붙는다
+#   sub  : 하위 카테고리 순서. 생략하거나 빠진 것은 뒤에 알파벳순으로 붙는다
+#
+# 하위 카테고리 안의 글은 오래된 순이다 (시리즈를 1편부터 읽도록)
+
+- name: Project
+  sub: [AI-Trade-Manager, Barrier-Free Mobility MCP]
+
+- name: AI
+  sub: [MCP, RAG, Embedding]
+
+- name: Infra
+  sub: [Docker, MQ, DB]
+
+- name: Web
+  sub: [Server]
