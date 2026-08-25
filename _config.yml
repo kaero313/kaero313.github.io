@@ -72,7 +72,7 @@ analytics:
 
 # Page views settings
 pageviews:
-  provider: busuanzi
+  provider: # now only supports 'goatcounter'    
 
 # Prefer color scheme setting.
 #
@@ -80,7 +80,7 @@ pageviews:
 # and there will be a toggle to switch the theme between dark and light
 # on the bottom left of the sidebar.
 #
-# Available options:
+# Available options: 
 #
 #     light — Use the light color scheme
 #     dark — Use the dark color scheme

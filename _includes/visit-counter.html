@@ -1,0 +1,46 @@
+<!-- 방문자 카운터 (Cloudflare Workers + D1) -->
+<script>
+  (function () {
+    var ENDPOINT = 'https://blog-visits.kaero313.workers.dev';
+
+    function render(id, value) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.textContent = new Intl.NumberFormat().format(value);
+      }
+    }
+
+    function reveal(id) {
+      var el = document.getElementById(id);
+      if (el) {
+        el.style.visibility = 'visible';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var path = location.pathname;
+
+      fetch(ENDPOINT + '/?path=' + encodeURIComponent(path))
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          if (!data || !data.site) {
+            return;
+          }
+
+          render('visits-site-today', data.site.today);
+          render('visits-site-total', data.site.total);
+          reveal('visits-site');
+
+          if (data.page) {
+            render('visits-page-total', data.page.total);
+            reveal('visits-page');
+          }
+        })
+        .catch(function () {
+          /* 카운터를 못 불러와도 페이지는 그대로 둔다 */
+        });
+    });
+  })();
+</script>
