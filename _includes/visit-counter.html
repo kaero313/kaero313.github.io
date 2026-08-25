@@ -1,43 +1,83 @@
-<!-- 방문자 카운터 (Cloudflare Workers + D1) -->
 <script>
+  /* 방문자 카운터 (Cloudflare Workers + D1)
+     compress_html 이 줄바꿈을 제거하므로 // 주석은 쓰지 않는다 */
   (function () {
     var ENDPOINT = 'https://blog-visits.kaero313.workers.dev';
 
-    function render(id, value) {
-      var el = document.getElementById(id);
-      if (el) {
-        el.textContent = new Intl.NumberFormat().format(value);
+    /* 로컬에서는 Worker 를 부르지 않는다.
+       CORS 로 막히기도 하고, 실제 카운트가 늘어나면 안 되기 때문이다.
+       대신 배치와 스타일을 확인할 수 있게 예시 숫자를 넣는다. */
+    var LOCAL_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0'];
+    var isLocal = LOCAL_HOSTS.indexOf(location.hostname) !== -1;
+    var SAMPLE = {
+      site: { today: 42, total: 1387 },
+      page: { today: 7, total: 216 }
+    };
+
+    function fmt(n) {
+      return new Intl.NumberFormat().format(n);
+    }
+
+    /* 사이드바 프로필 아래에 "Today N · Total N" 삽입 */
+    function renderSite(site) {
+      var anchor = document.querySelector('#sidebar .site-subtitle');
+      if (!anchor) {
+        return;
+      }
+      var el = document.createElement('p');
+      el.className = 'site-visits mb-0';
+      el.innerHTML =
+        'Today <span>' + fmt(site.today) + '</span>' +
+        ' &middot; Total <span>' + fmt(site.total) + '</span>';
+      anchor.insertAdjacentElement('afterend', el);
+    }
+
+    /* 글: 상단 메타 영역(읽는 시간 옆)에 조회수 삽입
+       탭 페이지(프로젝트): 메타 영역이 없으므로 제목 아래에 삽입 */
+    function renderPage(page) {
+      var label = '<em>' + fmt(page.total) + '</em>&nbsp;조회';
+
+      var readtime = document.querySelector('.post-meta .readtime');
+      if (readtime) {
+        var el = document.createElement('span');
+        el.className = 'post-visits';
+        el.innerHTML = label;
+        readtime.insertAdjacentElement('beforebegin', el);
+        return;
+      }
+
+      var title = document.querySelector('.dynamic-title');
+      if (title) {
+        var tabEl = document.createElement('p');
+        tabEl.className = 'tab-visits text-muted';
+        tabEl.innerHTML = label;
+        title.insertAdjacentElement('afterend', tabEl);
       }
     }
 
-    function reveal(id) {
-      var el = document.getElementById(id);
-      if (el) {
-        el.style.visibility = 'visible';
+    function paint(data) {
+      if (!data) {
+        return;
+      }
+      if (data.site) {
+        renderSite(data.site);
+      }
+      if (data.page) {
+        renderPage(data.page);
       }
     }
 
     document.addEventListener('DOMContentLoaded', function () {
-      var path = location.pathname;
+      if (isLocal) {
+        paint(SAMPLE);
+        return;
+      }
 
-      fetch(ENDPOINT + '/?path=' + encodeURIComponent(path))
+      fetch(ENDPOINT + '/?path=' + encodeURIComponent(location.pathname))
         .then(function (res) {
           return res.json();
         })
-        .then(function (data) {
-          if (!data || !data.site) {
-            return;
-          }
-
-          render('visits-site-today', data.site.today);
-          render('visits-site-total', data.site.total);
-          reveal('visits-site');
-
-          if (data.page) {
-            render('visits-page-total', data.page.total);
-            reveal('visits-page');
-          }
-        })
+        .then(paint)
         .catch(function () {
           /* 카운터를 못 불러와도 페이지는 그대로 둔다 */
         });
