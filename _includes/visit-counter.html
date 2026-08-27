@@ -4,6 +4,11 @@
   (function () {
     var ENDPOINT = 'https://blog-visits.kaero313.workers.dev';
 
+    /* 같은 방문자가 이 시간 안에 다시 오면 카운트하지 않는다.
+       직전에 받아둔 숫자를 대신 보여준다. */
+    var REVISIT_MINUTES = 30;
+    var STORE_KEY = 'visit-counter';
+
     /* 로컬에서는 Worker 를 부르지 않는다.
        CORS 로 막히기도 하고, 실제 카운트가 늘어나면 안 되기 때문이다.
        대신 배치와 스타일을 확인할 수 있게 예시 숫자를 넣는다. */
@@ -13,6 +18,24 @@
       site: { today: 42, total: 1387 },
       page: { today: 7, total: 216 }
     };
+
+    /* 브라우저 저장소는 시크릿 모드나 차단 설정에서 예외가 날 수 있다.
+       실패하면 저장 없이 평소대로 동작한다. */
+    function readStore() {
+      try {
+        return JSON.parse(localStorage.getItem(STORE_KEY)) || {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function writeStore(store) {
+      try {
+        localStorage.setItem(STORE_KEY, JSON.stringify(store));
+      } catch (e) {
+        /* 저장 못 해도 그냥 넘어간다 */
+      }
+    }
 
     function fmt(n) {
       return new Intl.NumberFormat().format(n);
@@ -73,11 +96,28 @@
         return;
       }
 
-      fetch(ENDPOINT + '/?path=' + encodeURIComponent(location.pathname))
+      var path = location.pathname;
+      var store = readStore();
+      var last = store[path];
+      var limit = REVISIT_MINUTES * 60 * 1000;
+
+      /* 최근에 본 페이지면 요청 없이 그때 받은 숫자를 다시 그린다 */
+      if (last && last.data && Date.now() - last.at < limit) {
+        paint(last.data);
+        return;
+      }
+
+      fetch(ENDPOINT + '/?path=' + encodeURIComponent(path))
         .then(function (res) {
           return res.json();
         })
-        .then(paint)
+        .then(function (data) {
+          paint(data);
+          if (data) {
+            store[path] = { at: Date.now(), data: data };
+            writeStore(store);
+          }
+        })
         .catch(function () {
           /* 카운터를 못 불러와도 페이지는 그대로 둔다 */
         });
