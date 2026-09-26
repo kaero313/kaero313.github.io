@@ -28,7 +28,8 @@ image: /assets/img/og/ai-trade-manager.jpg
   - paper/live 매매는 분리되고, 실전 BUY는 기본적으로 잠겨 있어야 한다
   - 주문, 포지션, 포트폴리오 스냅샷은 나중에 다시 확인할 수 있어야 한다
 
-- [개발 상세 기록 Notion](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da) &nbsp;&nbsp;/&nbsp;&nbsp; [운영 설계 기록](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-a704054272b583b3b1e081289e79cae2)
+- 소스 코드: [GitHub 저장소](https://github.com/kaero313/ai-trade-manager)
+- 전체 기록 허브: [AI Trade Manager](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-3724054272b580d0b968f323059761da)
 
 <br/>
 
@@ -42,6 +43,7 @@ image: /assets/img/og/ai-trade-manager.jpg
 - 2026.05 — 운영 안정화: live BUY 잠금, paper/live 분리, AI 대체 전환, RAG 경고
 - 2026.06 — 운영 검증 체계화: 트러블슈팅, AI 판단 계약, 화면 증거, RAG/DB/테스트 근거 정리
 - 2026.07 — 실주문 경계 재설계: 안전성 리뷰, 주문, 전역 kill switch, fail-closed 거래 모드, UI 전면 개편
+- 2026.08 ~ 09 — 개발 하네스 구축: Claude Code·Codex 멀티 에이전트, 실주문 코드 교차 검토, 자동 검증과 CI
 
 - [타임라인 DB](https://torpid-icon-d8a.notion.site/AI-Trade-Manager-d894054272b5827fb26d015d3ff14fee) &nbsp;&nbsp;/&nbsp;&nbsp; [프로젝트 목표와 운영 기준](https://torpid-icon-d8a.notion.site/3724054272b581caa9eeed5f55914b44)
 
@@ -65,8 +67,8 @@ image: /assets/img/og/ai-trade-manager.jpg
 | External | Upbit, Slack, RSS/News | 거래소 연동, 운영 제어, 시장 컨텍스트 수집 |
 | AI/Ops | AI 대체 전환, 로그/경고 | 분석 생성, 장애 대응, 운영 상태 노출 |
 
-Safety 레이어는 이번 7월에 새로 구성했다. <br/>
-주문을 낼지 말지를 앱 코드 여기저기서 판단하던 것을, 거래소로 나가는 모든 POST가 하나의 주문 서비스와 그 앞의 게이트를 지나도록 바꿨다. 그리고 프로세스가 재시작돼도 상태가 남아야 해서 메모리가 아니라 DB에 따로 두는게 좋다고 판단했다.
+Safety 레이어는 7월에 새로 구성했다. <br/>
+주문을 낼지 말지를 앱 코드 여기저기서 판단하던 것을, 거래소로 나가는 모든 POST가 하나의 주문 서비스와 그 앞의 게이트를 지나도록 바꿨다. 그리고 프로세스가 재시작돼도 상태가 남아야 해서 메모리가 아니라 DB에 따로 두는 게 좋다고 판단했다.
 
 - [전체 아키텍처와 해당 기술을 선택한 이유](https://torpid-icon-d8a.notion.site/3724054272b581ee9cede0fe3899dc68)
 
@@ -94,7 +96,7 @@ AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠
 | 설정 누락·오타가 live로 해석 | 기본값 paper + BLOCK, 판정 실패는 live로 보정하지 않음 |
 | 전량청산 실패를 성공으로 표시 | 미체결 0, 잔고 0, 원장 일치를 확인한 주문건만 성공 |
 
-실전 BUY는 기본 상태값을 비활성화로 지정했다. live 모드 전환, 봇 시작, 주문 게이트 전환이 각각 별개의 관리자 작업이며 어느 것도 다음 단계를 자동으로 실행하지 않게 하여 안전성을 높히는 구조를 선택했다.
+실전 BUY는 기본 상태값을 비활성화로 지정했다. live 모드 전환, 봇 시작, 주문 게이트 전환이 각각 별개의 관리자 작업이며 어느 것도 다음 단계를 자동으로 실행하지 않게 하여 안전성을 높이는 구조를 선택했다.
 
 > 판단 계약과 주문 차단 조건은 [AI 판단 루틴과 프롬프트 계약](https://torpid-icon-d8a.notion.site/3754054272b581829337e86149b4b2e0),<br/> 장애 대응 근거는 [자동매매 안전장치와 장애 대응](https://torpid-icon-d8a.notion.site/3724054272b5818fac75e1fa743f654b)에 있다.
 
@@ -116,6 +118,17 @@ AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠
 그중 제일 뜨끔했던 건 거래 모드였다. 운영 문서에는 모의 거래로 시작한다고 적어놨는데 코드 기본값은 실전이었고, 정확히 `paper`가 아닌 값은 전부 실전으로 해석하고 있었다. 오타 하나면 바로 실전이다. ~~드루와~~
 
 > 케이스별 상세는 [운영 트러블슈팅](https://torpid-icon-d8a.notion.site/3734054272b5810d8903c9283ce1e6c1), [RAG와 AI 서비스 운영](https://torpid-icon-d8a.notion.site/3724054272b581aaa4d1db140cf36035), [DB Migration과 테스트 근거](https://torpid-icon-d8a.notion.site/3724054272b581178dd3f280a7263f59)에 나눠 정리했다.
+
+<br/>
+
+# 개발 하네스
+---
+
+> 이번엔 진짜 하네스 엔지니어링이다.
+
+Claude Code·Codex로 역할별 멀티 에이전트와 스킬을 구성해서 개발했다. 원칙은 짠 에이전트의 "다 됐습니다"를 그대로 믿지 않는 것이다. 돈이 걸린 코드는 다른 에이전트가 테스트하고 검토한다.
+
+- [개발 하네스와 검증 게이트](https://torpid-icon-d8a.notion.site/3e64054272b581cba676ce54eb12969c)
 
 <br/>
 
@@ -196,4 +209,4 @@ AI 자동매매라고 하면 보통 "AI가 알아서 사고판다"를 먼저 떠
 
 이 프로그램을 만들면서 느낀 건, AI 서비스에서 모델은 생각보다 일부라는 점이다. 실제로 운영하려면 **데이터**가 언제 들어왔는지, 실패하면 어디서 멈추는지, 실전 기능은 어떤 조건에서 잠겨야 하는지가 더 중요했다.
 
-앞으로도 개발하고 운영하면서 생긴 이슈들이나 고민 사항들을 계속 다듬고 고도화 해 나갈 예정이다. 일단 다음 목표는 홈서버를 구축하고 거기에 올리고 운영해볼 예정인데, 벌써부터 난관이 예상되는구나.. ~~클라우드 가격 인하좀~~
+앞으로도 개발하고 운영하면서 생긴 이슈들이나 고민 사항들을 계속 다듬고 고도화해 나갈 예정이다. 일단 다음 목표는 홈서버를 구축하고 거기에 올리고 운영해볼 예정인데, 벌써부터 난관이 예상되는구나.. ~~클라우드 가격 인하좀~~
