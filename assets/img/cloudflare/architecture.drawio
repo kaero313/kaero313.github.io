@@ -1,0 +1,93 @@
+<mxfile host="Electron" agent="draw.io" version="27.0.9" type="device">
+  <diagram id="cloudflare-visits" name="방문 수 집계">
+    <mxGraphModel dx="1170" dy="550" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1170" pageHeight="550" math="0" shadow="0" background="#ffffff">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="방문 수 집계 구조" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Arial;fontSize=30;fontStyle=1;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="26" y="16" width="1098" height="44" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="browser" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#f5f5f5;strokeColor=#b3b3b3;strokeWidth=1;sketch=1;curveFitting=1;jiggle=2;fillStyle=hachure;hachureAngle=120;hachureGap=4;fillOpacity=40;strokeOpacity=55;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="26" y="90" width="280" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="browser-title" value="브라우저" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=20;fontColor=#000000;" vertex="1" connectable="0" parent="browser">
+          <mxGeometry x="14" y="10" width="252" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="browser-page" value="GitHub Pages 블로그" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e6e6e6;strokeColor=none;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="browser">
+          <mxGeometry x="30" y="64" width="220" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="browser-cache" value="페이지별 30분 캐시" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e6e6e6;strokeColor=none;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="browser">
+          <mxGeometry x="30" y="140" width="220" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="browser-display" value="방문 수 · 조회 수 표시" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e6e6e6;strokeColor=none;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="browser">
+          <mxGeometry x="30" y="216" width="220" height="48" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="worker" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e1d5e7;strokeColor=#d1b9e4;strokeWidth=1;sketch=1;curveFitting=1;jiggle=2;fillStyle=hachure;hachureAngle=120;hachureGap=4;fillOpacity=28;strokeOpacity=55;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="416" y="90" width="318" height="290" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker-title" value="Cloudflare Workers" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=20;fontColor=#000000;" vertex="1" connectable="0" parent="worker">
+          <mxGeometry x="14" y="10" width="290" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker-record" value="경로 수신 · 방문 기록" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=0.7;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="worker">
+          <mxGeometry x="28" y="64" width="262" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker-query" value="오늘 · 누적 방문 수 집계" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=0.7;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="worker">
+          <mxGeometry x="28" y="140" width="262" height="48" as="geometry"/>
+        </mxCell>
+        <mxCell id="worker-response" value="site / page JSON 응답" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;strokeWidth=0.7;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="worker">
+          <mxGeometry x="28" y="216" width="262" height="48" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="database" value="" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#dae8fc;strokeColor=#a6c8ff;strokeWidth=1;sketch=1;curveFitting=1;jiggle=2;fillStyle=hachure;hachureAngle=120;hachureGap=4;fillOpacity=32;strokeOpacity=55;container=1;collapsible=0;" vertex="1" parent="1">
+          <mxGeometry x="844" y="156" width="280" height="156" as="geometry"/>
+        </mxCell>
+        <mxCell id="database-title" value="Cloudflare D1" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=20;fontColor=#000000;" vertex="1" connectable="0" parent="database">
+          <mxGeometry x="14" y="12" width="252" height="38" as="geometry"/>
+        </mxCell>
+        <mxCell id="database-table" value="visits 테이블&lt;br&gt;&lt;font color=&quot;#666666&quot; style=&quot;font-size: 13px;&quot;&gt;path · visited_at&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;strokeWidth=0.7;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" parent="database">
+          <mxGeometry x="28" y="67" width="224" height="54" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="cache-storage" value="localStorage&lt;br&gt;&lt;font color=&quot;#777777&quot; style=&quot;font-size: 13px;&quot;&gt;페이지별 요청 시각 · 집계 결과&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;fillColor=#ffe6cc;strokeColor=#d79b00;strokeWidth=0.7;fontFamily=Arial;fontSize=15;fontColor=#000000;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="36" y="454" width="260" height="64" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="request" value="" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#000000;strokeWidth=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="browser" target="worker">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="request-label" value="페이지 경로" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#000000;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="308" y="201" width="106" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="sql" value="" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;strokeColor=#000000;strokeWidth=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="worker" target="database">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="sql-label" value="INSERT · COUNT" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#000000;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="730" y="201" width="118" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="response" value="" style="edgeStyle=none;rounded=0;html=1;endArrow=classic;endFill=1;dashed=1;dashPattern=2 2;strokeColor=#808080;strokeWidth=0.8;exitX=0;exitY=0.827586;exitDx=0;exitDy=0;entryX=1;entryY=0.827586;entryDx=0;entryDy=0;" edge="1" parent="1" source="worker" target="browser">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="response-label" value="JSON 응답" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=13;fontColor=#000000;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="308" y="338" width="106" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="database-result" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;dashed=1;dashPattern=2 2;strokeColor=#808080;strokeWidth=0.8;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="database" target="worker">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="984" y="428"/>
+              <mxPoint x="575" y="428"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="database-result-label" value="집계 결과" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontFamily=Arial;fontSize=15;fontColor=#000000;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="715" y="398" width="170" height="26" as="geometry"/>
+        </mxCell>
+        <mxCell id="cache-connection" value="" style="edgeStyle=none;rounded=0;html=1;endArrow=none;strokeColor=#999999;strokeWidth=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="browser" target="cache-storage">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

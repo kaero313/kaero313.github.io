@@ -12,7 +12,7 @@
   sub: [MCP, RAG, Embedding]
 
 - name: Infra
-  sub: [Docker, MQ, DB]
+  sub: [Docker, MQ, DB, Cloud]
 
 - name: Web
   sub: [Server]
