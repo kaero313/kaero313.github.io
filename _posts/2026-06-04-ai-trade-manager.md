@@ -1,6 +1,6 @@
 ---
 layout: redirect
-title: "[AI-Trade-Manager] 내 전용 AI 트레이딩 매니저를 만들어보자"
+title: "[AI-Trade-Manager] AI 분석을 자산 관리 서비스에 연결하며 고민한 것들"
 date: 2026-06-04 16:39:17 +0900
 categories: [Project, AI-Trade-Manager]
 tags: [AI, LLM, RAG, Project]
