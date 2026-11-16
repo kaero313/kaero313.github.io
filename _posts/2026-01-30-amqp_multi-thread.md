@@ -44,7 +44,7 @@ preview_image: assets/img/amqp/prev_icon.png
 ## 개선 방안
 
 <div align="center">
-  <img src="assets/img/amqp/after_workflow.png" alt="도입 이후 워크플로우" width="500">
+  <img src="assets/img/amqp/after_workflow.png" alt="도입 이후 워크플로우" width="1100">
 </div>
 > AMQP 도입, 중간에서 분산 처리하는 구조로 개선
 
