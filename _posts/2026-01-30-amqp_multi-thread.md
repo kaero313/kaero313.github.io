@@ -60,7 +60,7 @@ preview_image: assets/img/amqp/prev_icon.png
 - AMQP 도입 전
 
 <div align="center">
-  <img src="assets/img/amqp/before_test.png" alt="도입 이전 테스트" width="500">
+  <img src="assets/img/amqp/before_test.png" alt="도입 이전 테스트" width="800">
 </div>
 > 프로세스 과부하로 인하여 요청 전체를 처리하지 못 하고 Timeout이 발생한 데이터가 생김
 
