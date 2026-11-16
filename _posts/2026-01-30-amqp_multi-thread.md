@@ -55,6 +55,7 @@ preview_image: assets/img/amqp/prev_icon.png
 
 - Apache JMeter을 사용하여 부하 테스트 진행
   - 초당 5000건, 60초간 총 300,000건의 Request
+- 전체 코드: [깃허브](https://github.com/kaero313/amqp_multi-thread)
 
 - AMQP 도입 전
 
