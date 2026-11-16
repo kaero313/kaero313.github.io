@@ -67,7 +67,7 @@ preview_image: assets/img/amqp/prev_icon.png
 - AMQP 도입 후
 
 <div align="center">
-  <img src="assets/img/amqp/after_test.png" alt="도입 이후 테스트" width="500">
+  <img src="assets/img/amqp/after_test.png" alt="도입 이후 테스트" width="800">
 </div>
 > 리스닝중인 프로세스가 과부하가 발생하지 않게 관리하여 유실된 데이터 없이 전체 처리 완료
 
