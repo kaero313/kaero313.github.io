@@ -4,6 +4,7 @@ title: AI Trade Manager
 icon: fas fa-chart-line
 order: 1
 image: /assets/img/og/ai-trade-manager.jpg
+description: RAG 분석과 실시간 시세 대시보드, 주문 안전장치를 갖춘 AI 트레이딩 시스템을 만들고 운영한 기록
 ---
 
 <div align="center">
